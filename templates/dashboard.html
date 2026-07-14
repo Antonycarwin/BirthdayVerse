@@ -1,0 +1,289 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | BirthdayVerse{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <div class="row mb-4">
+
+        <div class="col-md-8">
+
+            <h2 class="fw-bold">
+                👋 Welcome {{ user.name }}
+            </h2>
+
+            <p class="text-muted">
+                Celebrate birthdays and spread happiness.
+            </p>
+
+        </div>
+
+        <div class="col-md-4 text-end">
+
+            <a href="/profile" class="btn btn-outline-primary">
+                My Profile
+            </a>
+
+        </div>
+
+    </div>
+{% if notifications %}
+
+<div class="card shadow-lg mb-4">
+
+    <div class="card-body">
+
+        <h4 class="text-danger">
+            🔔 Notifications
+        </h4>
+
+        <hr>
+
+        {% for note in notifications %}
+
+        <div class="alert alert-info">
+
+            {{ note.message }}
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endif %}
+    <div class="row">
+
+        <div class="col-lg-4 mb-4">
+
+            <div class="card shadow-lg h-100 birthday-card">
+
+                <div class="card-body">
+
+                    <h4 class="text-primary">
+                        🎂 Today's Birthdays
+                    </h4>
+
+                    <hr>
+
+                    {% if today_birthdays %}
+
+                        {% for person in today_birthdays %}
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+
+                            <div>
+
+                                <strong>{{ person["name"] }}</strong>
+
+                            </div>
+
+                            <a href="/wishes"
+                               class="btn btn-success btn-sm">
+
+                                Wish
+
+                            </a>
+
+                        </div>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <p>No birthdays today.</p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4 mb-4">
+
+            <div class="card shadow-lg h-100 tomorrow-card">
+
+                <div class="card-body">
+
+                    <h4 class="text-warning">
+                        🎁 Tomorrow
+                    </h4>
+
+                    <hr>
+
+                    {% if tomorrow_birthdays %}
+
+                        {% for person in tomorrow_birthdays %}
+
+                        <p>
+
+                            🎉 {{ person["name"] }}
+
+                        </p>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <p>No birthdays tomorrow.</p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4 mb-4">
+
+            <div class="card shadow-lg h-100 motivation-card">
+
+                <div class="card-body">
+
+                    <h4 class="text-success">
+
+                        💪 Today's Motivation
+
+                    </h4>
+
+                    <hr>
+
+                    <blockquote>
+
+                        "{{ motivational_quote }}"
+
+                    </blockquote>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+<div class="card shadow-lg mt-4 mb-4">
+
+    <div class="card-body">
+
+        <h4 class="text-danger">
+            🎁 All Upcoming Birthdays
+        </h4>
+
+        <hr>
+
+        {% if upcoming_birthdays %}
+
+            {% for person in upcoming_birthdays %}
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <div>
+
+                    🎂 <strong>{{ person["name"] }}</strong>
+
+                    <br>
+
+                    <small class="text-muted">
+
+                        {{ person["birthday"] }}
+
+                    </small>
+
+                </div>
+
+
+                <span class="badge bg-primary">
+
+                    {{ person["days_left"] }} days left
+
+                </span>
+
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>
+                No upcoming birthdays found.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<div class="card shadow-lg">
+    <div class="card-body">
+
+        <h4>
+            ⚡ Quick Actions
+        </h4>
+
+            <hr>
+
+            <div class="row">
+
+                <div class="col-md-3">
+
+                    <a href="/wishes"
+                       class="btn btn-primary w-100">
+
+                        💌 Wishes
+
+                    </a>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <a href="/profile"
+                       class="btn btn-success w-100">
+
+                        👤 Profile
+
+                    </a>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <a href="/about"
+                       class="btn btn-warning w-100">
+
+                        ℹ️ About
+
+                    </a>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <a href="/logout"
+                       class="btn btn-danger w-100">
+
+                        🚪 Logout
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

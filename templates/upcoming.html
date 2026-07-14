@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+
+{% block title %}Upcoming Birthdays | BirthdayVerse{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h1 class="text-center mb-5">
+        🎁 All Upcoming Birthdays
+    </h1>
+
+
+    <div class="row g-4">
+
+        {% if birthdays %}
+
+            {% for person in birthdays %}
+
+            <div class="col-md-4">
+
+                <div class="card shadow-lg h-100">
+
+                    <div class="card-body text-center">
+
+                        <h3>
+                            🎂 {{ person["name"] }}
+                        </h3>
+
+
+                        <hr>
+
+
+                        <p>
+
+                            📅 Birthday:
+
+                            <br>
+
+                            {{ person["birthday"] }}
+
+                        </p>
+
+
+                        <h4 class="text-primary">
+
+                        {{ person["days_left"] }}
+                        Days
+
+                    </h4>
+
+                    <p>
+                    ⏳
+
+                    <span class="countdown"
+                    data-date="{{ person['birthday'] }}">
+
+                    Loading...
+
+                    </span>
+
+                    </p>
+                    <p class="text-muted">
+
+                        ⏳ Countdown to birthday
+
+                    </p>
+
+
+                        <a href="/wishes"
+                           class="btn btn-success mt-3">
+
+                            💌 Send Wish
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+        <div class="text-center">
+
+            <h4>
+                No upcoming birthdays found.
+            </h4>
+
+        </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+<script>
+
+function updateCountdowns(){
+
+    document
+    .querySelectorAll(".countdown")
+    .forEach(function(timer){
+
+
+        let birthday = new Date(
+            timer.dataset.date
+        );
+
+
+        let now = new Date();
+
+
+        birthday.setFullYear(
+            now.getFullYear()
+        );
+
+
+        if(birthday < now){
+
+            birthday.setFullYear(
+                now.getFullYear()+1
+            );
+
+        }
+
+
+        let difference =
+            birthday - now;
+
+
+        let days =
+            Math.floor(
+                difference /
+                (1000*60*60*24)
+            );
+
+
+        let hours =
+            Math.floor(
+                (difference %
+                (1000*60*60*24))
+                /
+                (1000*60*60)
+            );
+
+
+        let minutes =
+            Math.floor(
+                (difference %
+                (1000*60*60))
+                /
+                (1000*60)
+            );
+
+
+        let seconds =
+            Math.floor(
+                (difference %
+                (1000*60))
+                /
+                1000
+            );
+
+
+        timer.innerHTML =
+            days + " Days " +
+            hours + " Hours " +
+            minutes + " Minutes " +
+            seconds + " Seconds";
+
+    });
+
+}
+
+
+setInterval(
+    updateCountdowns,
+    1000
+);
+
+
+updateCountdowns();
+
+</script>
+
+{% endblock %}
